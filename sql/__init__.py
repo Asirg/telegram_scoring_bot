@@ -1,0 +1,1 @@
+from .methods import get_last_applications, get_application
