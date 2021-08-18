@@ -36,7 +36,7 @@ def scoring_code(id:int, model:str) -> float:
 def get_inline_keyboard():
     """ Функция создание inline-кнопки для принятие заявки """
     keyboard = types.InlineKeyboardMarkup()
-    button = types.InlineKeyboardButton(text = "Забрать заявку", callback_data="application")
+    button = types.InlineKeyboardButton(text = "Забрать заявку", callback_data="application",  resize_keyboard=True, one_time_keyboard=True)
     keyboard.add(button)
     return keyboard
 
@@ -88,7 +88,8 @@ def callback_applications(call):
     """ Обработка callback-ов"""
     if call.data == "application": # Обработка нажания кноки "забрать заявку"
         new_text = call.message.text + f"\n✅ Заявка взята {call.from_user.first_name} ({call.from_user.username})"
-        bot.edit_message_text(new_text, chat_id = call.message.chat.id , message_id = call.message.id)
+        bot.edit_message_reply_markup(chat_id = call.message.chat.id, message_id = call.message.id, reply_markup = '')
+        bot.edit_message_text(new_text, chat_id = call.message.chat.id, reply_markup='', message_id = call.message.id)
 
 if __name__ == "__main__":
     if not os.path.exists('log'): # Проверка на наличие лога с id проверенных заявок
